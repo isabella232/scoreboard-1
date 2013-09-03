@@ -1,3 +1,8 @@
+scoreboard_user:
+    resource: "@ScoreboardUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 scoreboard_app:
     resource: "@ScoreboardAppBundle/Controller/"
     type:     annotation
