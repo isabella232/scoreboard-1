@@ -1,0 +1,5 @@
+scoreboard_app:
+    resource: "@ScoreboardAppBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
