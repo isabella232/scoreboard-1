@@ -32,14 +32,25 @@
 				<li><a href="#about">Settings</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/logout">Logout</a></li>
+				<li>
+	            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+	                <a href="{{ path('fos_user_security_logout') }}">
+	                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+	                </a>
+	            {% else %}
+	                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+	            {% endif %}
+				</li>
 			</ul>
 		</div>
 	</div>
 </div>
-
-<div class="container">
-{% block body %}jeej{% endblock %}
+<div class="container content-container">
+{% block fos_user_content %}
+{% endblock fos_user_content %}
+{% block content %}
+{% endblock %}
 </div>
 
 {% javascripts '@ScoreboardAppBundle/Resources/public/js/*' %}

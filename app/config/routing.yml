@@ -8,3 +8,5 @@ scoreboard_app:
     type:     annotation
     prefix:   /
 
+_fos:
+    resource: routing_fos.yml

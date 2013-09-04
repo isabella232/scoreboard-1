@@ -25,6 +25,9 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    form:
+        resources:
+            - "ScoreboardAppBundle:Form:form_bootstrap_layout.html.twig"
 
 # Assetic Configuration
 assetic:
@@ -69,3 +72,8 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Scoreboard\UserBundle\Entity\User
+    registration:
+        confirmation:   true
+    from_email:
+        address:        noreply@acmedemo.com
+        sender_name:    Acme Demo App
