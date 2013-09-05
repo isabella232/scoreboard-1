@@ -22,6 +22,16 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Scoreboard\AppBundle\Entity\Score", mappedBy="givenBy")
+     */
+    protected $givenScores;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Scoreboard\AppBundle\Entity\Score", mappedBy="givenTo")
+     */
+    protected $receivedScores;
+
     public function __construct()
     {
         parent::__construct();
