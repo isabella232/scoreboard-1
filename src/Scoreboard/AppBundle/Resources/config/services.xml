@@ -17,4 +17,10 @@
         </service>
     </services>
     -->
+
+    <services>
+        <service id="scoreboard.twig.menu_extension" class="Scoreboard\AppBundle\Twig\MenuExtension">
+            <tag name="twig.extension" />
+        </service>
+    </services>
 </container>

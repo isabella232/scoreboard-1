@@ -1,0 +1,61 @@
+{% extends 'ScoreboardAppBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-7">
+		<blockquote class="button-score-add">
+			<p>“You see, freedom has a way of destroying things.”</p>
+			<small><cite title="Scott Westerfeld, Extras">Scott Westerfeld, Extras</cite></small>
+		</blockquote>
+		<h2>{% trans %}layout.stream{% endtrans %}</h2>
+		{% for score in points %}
+			<div class="row widget-score">
+				<div class="col-md-1 points points-{% if score.points > 0 %}plus{% else %}min{% endif %}">
+					{% if score.points > 0 %}+{% endif %}{{ score.points }}
+				</div>
+				<div class="col-md-11">
+					<p>
+						to <strong>{{ score.givenTo.username }}</strong> from <strong>{{ score.givenBy.username }}</strong>
+						<small class="pull-right">{{score.creationDate | date('d-m-Y H:i')}}</small>
+					</p>
+					{% if score.description %}
+						<p>{{ score.description }}</p>
+					{% endif %}
+
+					<a href="#" class="btn-icon"><span class="glyphicon glyphicon-exclamation-sign"></span></a> &nbsp; 
+					<a href="#" class="btn-icon"><span class="glyphicon glyphicon-comment"></span> 2</a> &nbsp; 
+					<a href="#" class="pull-right btn-icon"><span class="glyphicon glyphicon-trash"></span></a>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+	<div class="col-md-4 col-md-offset-1">
+		<div class="well well-sm">
+		<table class="table table-condensed" style="margin: 0;">
+			<thead>
+			<tr>
+				<th></th>
+				<th>Name</th>
+				<th>Score</th>
+				<th>#</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for scoreline in scoreboard %}
+			<tr>
+				<td>{{ loop.index }}</td>
+				<td>{{ scoreline.username }}</td>
+				<td>{{ scoreline.total }}</td>
+				<td>{{ scoreline.amount }}</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		</div>
+		<h2>{% trans %}layout.history{% endtrans %}</h2>
+		<p>Matthias gave 3 point given to thomas</p>
+		<p>Liselotte disputes 2 points given to thomas</p>
+		<p>Johan commented on 1 point taken from Matthias</p>
+	</div>
+</div>
+{% endblock %}

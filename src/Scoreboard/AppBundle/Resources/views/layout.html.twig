@@ -8,7 +8,7 @@
 
 	<title>Scoreboard</title>
 
-	{% stylesheets '@ScoreboardAppBundle/Resources/public/css/*' %}
+	{% stylesheets 'bundles/scoreboardapp/css/*' filter='cssrewrite' %}
 	<link rel="stylesheet" href="{{ asset_url }}" />
 	{% endstylesheets %}
 </head>
@@ -24,12 +24,12 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">Scoreboard</a>
+			<a class="navbar-brand" href="{{ path('stream') }}">Scoreboard</a>
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Stream</a></li>
-				<li><a href="#about">Settings</a></li>
+				<li {{ isActiveMenuItem('stream') }}><a href="{{ path('stream') }}"><span class="glyphicon glyphicon-list"></span> Stream</a></li>
+				<li {{ isActiveMenuItem('settings') }}><a href="#about">Settings</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
@@ -47,15 +47,20 @@
 	</div>
 </div>
 <div class="container content-container">
-{% block fos_user_content %}
-{% endblock fos_user_content %}
+
+{% include 'ScoreboardAppBundle::notices.html.twig' %}
+
 {% block content %}
 {% endblock %}
 </div>
 
-{% javascripts '@ScoreboardAppBundle/Resources/public/js/*' %}
+{% javascripts 
+	'@ScoreboardAppBundle/Resources/public/js/jquery.js'
+	'@ScoreboardAppBundle/Resources/public/js/*' %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
+
+
 
 </body>
 </html>

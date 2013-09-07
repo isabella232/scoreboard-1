@@ -32,6 +32,11 @@ class User extends BaseUser
      */
     protected $receivedScores;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Scoreboard\AppBundle\Entity\Dispute", mappedBy="user")
+     */
+    protected $disputes;
+
     public function __construct()
     {
         parent::__construct();

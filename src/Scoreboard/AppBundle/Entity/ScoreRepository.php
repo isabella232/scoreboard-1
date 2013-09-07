@@ -12,4 +12,29 @@ use Doctrine\ORM\EntityRepository;
  */
 class ScoreRepository extends EntityRepository
 {
+	public function getStream() {
+		$query = $this->createQueryBuilder('s')
+			->select('s, u, u2')
+			->leftJoin('s.givenTo', 'u')
+			->leftJoin('s.givenBy', 'u2')
+			->orderby('s.creationDate', 'DESC')
+			->getQuery();
+		return $query->getResult();
+	}
+
+	public function getStreamForUser(User $user) {
+
+	}
+
+	public function getScoreboard() {
+		$query = $this->createQueryBuilder('s')
+			->select('u.username, SUM(s.points) as total, COUNT(s.points) as amount')
+			->leftJoin('s.givenTo', 'u')
+			->groupBy('s.givenTo')
+			->orderBy('u.username', 'ASC')
+			->orderBy('amount', 'DESC')
+			->orderBy('total', 'DESC')
+			->getQuery();
+		return $query->getResult();
+	}
 }

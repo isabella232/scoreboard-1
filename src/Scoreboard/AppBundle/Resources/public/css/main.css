@@ -1,3 +1,73 @@
+/** GENERAL **/
+a.hover {
+  outline: 0;
+  color: #2a6496;
+  text-decoration: underline;
+}
+
 .content-container {
 	margin-top: 5em;
+}
+
+#input-points {
+	width: 1em;
+	text-align: center;
+}
+
+.input-invisible {
+	background-color: transparent;
+	border: 0px solid !important;
+}
+
+.button-score-add {
+	cursor: pointer;
+	cursor: hand;
+}
+
+.button-score-add:hover {
+	border-color: #dddddd;
+	background-color: #f8f8f8;
+}
+
+.button-score-add:hover small {
+	color: #333333;
+}
+
+/** WIDGET SCORE **/
+.widget-score {
+	box-sizing: border-box;
+	padding: 10px;
+	min-height: 20px;
+	margin-bottom: 10px;
+}
+.widget-score.well {
+	padding: 9px;
+}
+
+
+.widget-score .points {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.widget-score .points-plus {
+	color: green;
+}
+
+.widget-score .points-min {
+	color: red;
+}
+
+.widget-score .btn-icon {
+	color: white;
+	text-decoration: none;
+}
+
+.widget-score.well .btn-icon {
+	color: #333333;
+}
+
+.widget-score.well .btn-icon:hover {
+	color: #428bca;
+	text-decoration: none;
 }

@@ -2,13 +2,15 @@
 
 namespace Scoreboard\AppBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Scoreboard\UserBundle\Entityy\User;
+use Scoreboard\AppBundle\Exception\InvalidArgumentException;
+use Scoreboard\UserBundle\Entity\User;
 
 /**
  * Score
  *
- * @ORM\Table()
+ * @ORM\Table(name="score")
  * @ORM\Entity(repositoryClass="Scoreboard\AppBundle\Entity\ScoreRepository")
  */
 class Score
@@ -55,10 +57,19 @@ class Score
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="text", nullable=true)
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private $comment;
+    private $description;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Scoreboard\AppBundle\Entity\Dispute", mappedBy="score")
+     */
+    private $disputes;
+
+    public function __construct() 
+    {
+        $this->creationDate = new DateTime();
+    }
 
     /**
      * Get id
@@ -124,6 +135,9 @@ class Score
      */
     public function setPoints($points)
     {
+        if(! is_int($points) || $points < -3 || $points > 3 || $points == 0) {
+            throw new InvalidArgumentException('Points out of range');
+        }
         $this->points = $points;
     
         return $this;
@@ -145,7 +159,7 @@ class Score
      * @param \DateTime $creationDate
      * @return Score
      */
-    public function setCreationDate($creationDate)
+    public function setCreationDate(DateTime $creationDate)
     {
         $this->creationDate = $creationDate;
     
@@ -163,25 +177,25 @@ class Score
     }
 
     /**
-     * Set comment
+     * Set description
      *
-     * @param string $comment
+     * @param string $description
      * @return Score
      */
-    public function setComment($comment)
+    public function setDescription($description)
     {
-        $this->comment = $comment;
+        $this->description = $description;
     
         return $this;
     }
 
     /**
-     * Get comment
+     * Get description
      *
      * @return string 
      */
-    public function getComment()
+    public function getDescription()
     {
-        return $this->comment;
+        return $this->description;
     }
 }

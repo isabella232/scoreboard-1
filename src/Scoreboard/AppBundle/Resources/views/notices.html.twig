@@ -1,0 +1,27 @@
+{% set successMessages = app.session.flashbag.get('success') %}
+{% if  successMessages | length %}
+<div class="alert alert-success alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert-success" aria-hidden="true">&times;</button>
+	<strong>{% trans %}layout.flash.success{% endtrans %}</strong> 
+	{% if successMessages | length > 1 %}<br />{% endif %}
+
+	{% for message in successMessages %}
+		{{ message | trans }}
+		{% if not loop.last %}<br />{% endif %}
+	{% endfor %}
+</div>
+{% endif %}
+
+{% set errorMessages = app.session.flashbag.get('error') %}
+{% if errorMessages | length %}
+<div class="alert alert-danger alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert-danger" aria-hidden="true">&times;</button>
+	<strong>{% trans %}layout.flash.error{% endtrans %}</strong> 
+	{% if errorMessages | length > 1 %}<br />{% endif %}
+
+	{% for message in errorMessages %}
+		{{ message }}
+		{% if not loop.last %}<br />{% endif %}
+	{% endfor %}
+</div>
+{% endif %}
