@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Scoreboard\UserBundle\Entity\User;
 use Scoreboard\AppBundle\Validator\ScoreValidator;
 use Scoreboard\AppBundle\Entity\Score;
@@ -71,4 +72,26 @@ class StreamController extends Controller
             array()
         );
     }
+
+    /**
+     * @Route("/stream/score/{id}/dispute", name="stream_score_dispute")
+     * @Template()
+     * @ParamConverter("score", class="ScoreboardAppBundle:Score")
+     */
+    public function scoreDisputeAction(Score $score, Request $request)
+    {
+        $dispute = new Dispute();
+        $dispute->setScore($score);
+        $dispute->setUser($this->getUser());
+        $em->persist($dispute);
+        $em->flush();
+
+        $this->forward('@ScoreboardAppBundle:Stream:overview');
+    }
+
+    /**
+     * @Route("/stream/score/{id}/overview", name="stream_score_overview")
+     * @Template()
+     * @ParamConverter("score", class="ScoreboardAppBundle:Score")
+     */
 }

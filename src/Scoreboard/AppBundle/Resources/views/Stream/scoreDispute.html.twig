@@ -1,0 +1,15 @@
+{% extends 'ScoreboardAppBundle::layout.iframe.html.twig' %}
+
+{% block content %}
+<div class="container">
+
+<h2>Dispute score</h2>
+<p>{{ score.points }} were given to {{ score.givenTo.username }} from {{ score.givenBy }}</p>
+<p>{{ score.description }}</p>
+<form role="form" method="POST" action="{{ path('stream_score_add') }}">
+	<textarea class="form-control" name="dispute.description"></description>
+	<button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+</div>
+{% endblock %}

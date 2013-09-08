@@ -15,7 +15,7 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li {{ isActiveMenuItem('stream') }}><a href="{{ path('stream') }}"><span class="glyphicon glyphicon-list"></span> Stream</a></li>
-					<li {{ isActiveMenuItem('settings') }}><a href="#about">Settings</a></li>
+					<li {{ isActiveMenuItem('settings') }}><a href="#about"><span class="glyphicon glyphicon-wrench"></span> Settings</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li>
@@ -37,6 +37,6 @@
 	{% include 'ScoreboardAppBundle::notices.html.twig' %}
 
 	{% block content %}{% endblock %}
-	
+
 	</div>
 {% endblock %}

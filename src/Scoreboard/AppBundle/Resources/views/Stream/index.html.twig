@@ -22,7 +22,7 @@
 						<p>{{ score.description }}</p>
 					{% endif %}
 
-					<a href="#" class="btn-icon"><span class="glyphicon glyphicon-exclamation-sign"></span></a> &nbsp; 
+					<a href="{{ path('stream_score_dispute', { id: score.id }) }}" class="btn-icon button-score-dispute"><span class="glyphicon glyphicon-exclamation-sign"></span></a> &nbsp; 
 					<a href="#" class="btn-icon"><span class="glyphicon glyphicon-comment"></span> 2</a> &nbsp; 
 					<a href="#" class="pull-right btn-icon"><span class="glyphicon glyphicon-trash"></span></a>
 				</div>

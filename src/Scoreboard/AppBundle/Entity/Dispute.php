@@ -2,6 +2,7 @@
 
 namespace Scoreboard\AppBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -65,6 +66,11 @@ class Dispute
      */
     private $creationDate;
 
+    public function __construct() 
+    {
+        $this->creationDate = new DateTime();
+        $this->expirationDate = new DateTime('+1 day');
+    }
 
     /**
      * Get id
