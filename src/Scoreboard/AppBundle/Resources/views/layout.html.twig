@@ -1,66 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
-	<meta name="author" content="">
+{% extends 'ScoreboardAppBundle::base.html.twig' %}
 
-	<title>Scoreboard</title>
-
-	{% stylesheets 'bundles/scoreboardapp/css/*' filter='cssrewrite' %}
-	<link rel="stylesheet" href="{{ asset_url }}" />
-	{% endstylesheets %}
-</head>
-
-<body>
-
-<!-- Fixed navbar -->
-<div class="navbar navbar-default navbar-fixed-top">
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="{{ path('stream') }}">Scoreboard</a>
-		</div>
-		<div class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				<li {{ isActiveMenuItem('stream') }}><a href="{{ path('stream') }}"><span class="glyphicon glyphicon-list"></span> Stream</a></li>
-				<li {{ isActiveMenuItem('settings') }}><a href="#about">Settings</a></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li>
-	            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-	                <a>{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |</a></li><li>
-	                <a href="{{ path('fos_user_security_logout') }}">
-	                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-	                </a>
-	            {% else %}
-	                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-	            {% endif %}
-				</li>
-			</ul>
+{% block base %}
+	<!-- Fixed navbar -->
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="{{ path('stream') }}">Scoreboard</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li {{ isActiveMenuItem('stream') }}><a href="{{ path('stream') }}"><span class="glyphicon glyphicon-list"></span> Stream</a></li>
+					<li {{ isActiveMenuItem('settings') }}><a href="#about">Settings</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+		            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+		                <a>{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |</a></li><li>
+		                <a href="{{ path('fos_user_security_logout') }}">
+		                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+		                </a>
+		            {% else %}
+		                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+		            {% endif %}
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
-</div>
-<div class="container content-container">
+	<div class="container content-container">
 
-{% include 'ScoreboardAppBundle::notices.html.twig' %}
+	{% include 'ScoreboardAppBundle::notices.html.twig' %}
 
-{% block content %}
+	{% block content %}{% endblock %}
+	
+	</div>
 {% endblock %}
-</div>
-
-{% javascripts 
-	'@ScoreboardAppBundle/Resources/public/js/jquery.js'
-	'@ScoreboardAppBundle/Resources/public/js/*' %}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-
-
-
-</body>
-</html>

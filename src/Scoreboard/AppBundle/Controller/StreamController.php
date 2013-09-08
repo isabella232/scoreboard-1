@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Scoreboard\UserBundle\Entity\User;
 use Scoreboard\AppBundle\Validator\ScoreValidator;
 use Scoreboard\AppBundle\Entity\Score;
 
@@ -14,6 +15,7 @@ class StreamController extends Controller
 {
     /**
      * @Route("/stream", name="stream")
+     * @Route("/")
      * @Template()
      */
     public function indexAction()
@@ -35,30 +37,38 @@ class StreamController extends Controller
      */
     public function scoreAddAction(Request $request)
     {
+        if($request->getMethod() != 'POST') {
+            return array();
+        }
+
     	$em = $this->getDoctrine()->getManager();
     	$userRepository = $em->getRepository('ScoreboardUserBundle:User');
-
     	$validator = new ScoreValidator();
     	$parameters = array(
     		'points' =>  $request->request->get('points'),
-    		'user' => $userRepository->find($request->request->get('user'))
+    		'user' => $userRepository->findOneByUsername($request->request->get('user'))
     	);
-    	$parameters['points'] = $request->request->get('points-sign') > 0 ? $parameters['points'] : -$parameters['points'];
-		if(! $validator->isValid($parameters)) {
+
+        if(! $validator->isValid($parameters)) {
 			$flashBag = $this->get('session')->getFlashBag();
 			foreach($validator->getErrors() as $error) {
 				$flashBag->add('error', $error);
 			}
-		} else {
-			// save
-			$score = new Score();
-			$score->setPoints((int)$parameters['points']);
-			$score->setGivenTo($parameters['user']);
-			$score->setGivenBy($this->getUser());
-			$em->persist($score);
-			$em->flush();
-			$this->get('session')->getFlashBag()->add('success', 'form.score.success');
+            return $this->redirect($this->generateUrl('stream_score_add'));
 		}
-		return $this->redirect($this->generateUrl('stream'));
+
+		// save
+		$score = new Score();
+		$score->setPoints((int)$parameters['points']);
+		$score->setGivenTo($parameters['user']);
+		$score->setGivenBy($this->getUser());
+		$em->persist($score);
+		$em->flush();
+		$this->get('session')->getFlashBag()->add('success', 'form.score.success');
+
+        return $this->render(
+            'ScoreboardAppBundle::refresh.iframe.html.twig',
+            array()
+        );
     }
 }

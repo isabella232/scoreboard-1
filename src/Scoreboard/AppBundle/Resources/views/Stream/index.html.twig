@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
 	<div class="col-md-7">
-		<blockquote class="button-score-add">
+		<blockquote class="button-score-add" href="{{ path('stream_score_add') }}">
 			<p>“You see, freedom has a way of destroying things.”</p>
 			<small><cite title="Scott Westerfeld, Extras">Scott Westerfeld, Extras</cite></small>
 		</blockquote>
@@ -58,4 +58,9 @@
 		<p>Johan commented on 1 point taken from Matthias</p>
 	</div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ asset('bundles/scoreboardapp/js/stream.js') }}"></script>
 {% endblock %}
