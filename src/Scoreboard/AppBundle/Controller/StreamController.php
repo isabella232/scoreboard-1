@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Scoreboard\UserBundle\Entity\User;
 use Scoreboard\AppBundle\Validator\ScoreValidator;
 use Scoreboard\AppBundle\Entity\Score;
-
+use Scoreboard\AppBundle\Entity\Dispute;
 
 class StreamController extends Controller
 {
@@ -80,13 +80,21 @@ class StreamController extends Controller
      */
     public function scoreDisputeAction(Score $score, Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $disputeRepository = $em->getRepository('ScoreboardAppBundle:Dispute');
+        $redirectResponse = $this->redirect($this->generateUrl('stream_score_overview', array('id' => $score->getId())));
+        if($disputeRepository->hasOpenDisputesByScore($score)) {
+            // Vote for
+            return $redirectResponse;
+        }
+
         $dispute = new Dispute();
         $dispute->setScore($score);
         $dispute->setUser($this->getUser());
         $em->persist($dispute);
         $em->flush();
 
-        $this->forward('@ScoreboardAppBundle:Stream:overview');
+        return $redirectResponse;
     }
 
     /**
@@ -94,4 +102,8 @@ class StreamController extends Controller
      * @Template()
      * @ParamConverter("score", class="ScoreboardAppBundle:Score")
      */
+    public function scoreOverviewAction(Score $score, Request $request)
+    {
+        return array('score' => $score);
+    }
 }

@@ -1,0 +1,32 @@
+{% extends 'ScoreboardAppBundle::layout.iframe.html.twig' %}
+
+{% block content %}
+<div class="container">
+
+<h2>Score overview</h2>
+<p>{{ score.points }} points were given to {{ score.givenTo.username }} from {{ score.givenBy }}</p>
+<p>{{ score.description }}</p>
+
+{% if score.disputes | length %}
+	<h3>Dispute</h3>
+	{% for dispute in score.disputes %}
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Disputed by {{ dispute.user.username }} on {{ dispute.creationDate | date('d-m-Y H:i') }}
+			</div>
+			<div class="panel-body">
+				<p>
+					<a href=""><span class="glyphicon glyphicon-thumbs-up"></span> 0 votes for</a> &nbsp; 
+					<a href=""><span class="glyphicon glyphicon-thumbs-down"></span> 0 votes against</a>
+				</p>
+			</div>
+		</div>
+	{% endfor %}
+{% endif %}
+<h3>Comments</h3>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ asset('bundles/scoreboardapp/js/stream.js') }}"></script>
+{% endblock %}

@@ -12,4 +12,26 @@ use Doctrine\ORM\EntityRepository;
  */
 class DisputeRepository extends EntityRepository
 {
+	public function hasOpenDisputesByScore(Score $score)
+	{
+		$query = $this->createQueryBuilder('d')
+			->select('COUNT(d.id)')
+			->where('d.success = :success')
+			->andWhere('d.expirationDate >= :expirationDate')
+			->setParameter('success', FALSE)
+			->setParameter('expirationDate', new \DateTime())
+			->getQuery();
+		return $query->getSingleScalarResult() > 0;
+	}
+	public function getOpenDisputesByScore(Score $score)
+	{
+		$query = $this->createQueryBuilder('d')
+			->select('d')
+			->where('d.success = :success')
+			->andWhere('d.expirationDate >= :expirationDate')
+			->setParameter('success', FALSE)
+			->setParameter('expirationDate', new \DateTime())
+			->getQuery();
+		return $query->getResult();
+	}
 }

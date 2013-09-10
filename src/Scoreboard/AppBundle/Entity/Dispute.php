@@ -50,12 +50,12 @@ class Dispute
      *
      * @ORM\Column(name="success", type="boolean")
      */
-    private $success;
+    private $success = FALSE;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="successDate", type="datetime")
+     * @ORM\Column(name="successDate", type="datetime", nullable=TRUE)
      */
     private $successDate;
 

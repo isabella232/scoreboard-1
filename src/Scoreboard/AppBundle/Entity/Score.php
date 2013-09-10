@@ -63,6 +63,7 @@ class Score
 
     /**
      * @ORM\OneToMany(targetEntity="Scoreboard\AppBundle\Entity\Dispute", mappedBy="score")
+     * @ORM\OrderBy({"creationDate" = "DESC"})
      */
     private $disputes;
 
@@ -197,5 +198,28 @@ class Score
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set disputes
+     *
+     * @param Dispute $disputes
+     * @return Score
+     */
+    public function addDispute(Dispute $dispute)
+    {
+        $this->disputes[] = $disputes;
+    
+        return $this;
+    }
+
+    /**
+     * Get disputes
+     *
+     * @return Dispute
+     */
+    public function getdisputes()
+    {
+        return $this->disputes;
     }
 }
